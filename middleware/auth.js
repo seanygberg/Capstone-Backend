@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../models/user');
-const { createToken } = require("../helpers/token");
+const { createToken } = require("../helpers/tokens");
 
 // Sign up new users
 const signup = async (req, res) => {
