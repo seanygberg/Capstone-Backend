@@ -7,7 +7,7 @@ const client = new Client({
   password: 'pDw3zIk9sw9KuPzn',
   port: 5432,
   ssl: { rejectUnauthorized: false },
-  connectionString: 'postgres://postgres:pDw3zIk9sw9KuPzn@db.kzlmwfnxoahkrvcqdiek.supabase.co:5432/postgres?sslmode=require'
+  connectionString: 'postgresql://postgres.kzlmwfnxoahkrvcqdiek:pDw3zIk9sw9KuPzn@aws-0-us-west-1.pooler.supabase.com:6543/postgres'
 });
 
 client.connect()
