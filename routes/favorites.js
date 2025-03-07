@@ -1,20 +1,11 @@
 const express = require('express');
-const {
-  getAllFavorites,
-  getFavoriteById,
-  getFavoritePlayersByUser,
-  getFavoriteTeamsByUser,
-  createFavoritePlayer,
-  createFavoriteTeam,
-  deleteFavorite
-} = require('../models/favorite');
-
+const Favorite = require('../models/favorite');
 const router = express.Router();
 
 // Get all favorites
 router.get('/', async (req, res) => {
   try {
-    const favorites = await getAllFavorites();
+    const favorites = await Favorite.getAllFavorites();
     res.json(favorites);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -24,7 +15,7 @@ router.get('/', async (req, res) => {
 // Get a favorite by ID
 router.get('/:id', async (req, res) => {
   try {
-    const favorite = await getFavoriteById(req.params.id);
+    const favorite = await Favorite.getFavoriteById(req.params.id);
     if (!favorite) return res.status(404).json({ message: 'Favorite not found' });
     res.json(favorite);
   } catch (err) {
@@ -35,7 +26,7 @@ router.get('/:id', async (req, res) => {
 // Get all favorite players for a user
 router.get('/players/:user_id', async (req, res) => {
   try {
-    const favorites = await getFavoritePlayersByUser(req.params.user_id);
+    const favorites = await Favorite.getFavoritePlayersByUser(req.params.user_id);
     res.json(favorites);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -45,7 +36,7 @@ router.get('/players/:user_id', async (req, res) => {
 // Get all favorite teams for a user
 router.get('/teams/:user_id', async (req, res) => {
   try {
-    const favorites = await getFavoriteTeamsByUser(req.params.user_id);
+    const favorites = await Favorite.getFavoriteTeamsByUser(req.params.user_id);
     res.json(favorites);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -59,7 +50,7 @@ router.post('/players', async (req, res) => {
     if (!user_id || !player_id) {
       return res.status(400).json({ message: 'User ID and Player ID are required' });
     }
-    const favorite = await createFavoritePlayer(user_id, player_id);
+    const favorite = await Favorite.createFavoritePlayer(user_id, player_id);
     res.status(201).json(favorite);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -73,7 +64,7 @@ router.post('/teams', async (req, res) => {
     if (!user_id || !team_id) {
       return res.status(400).json({ message: 'User ID and Team ID are required' });
     }
-    const favorite = await createFavoriteTeam(user_id, team_id);
+    const favorite = await Favorite.createFavoriteTeam(user_id, team_id);
     res.status(201).json(favorite);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -84,7 +75,7 @@ router.post('/teams', async (req, res) => {
 router.delete('/', async (req, res) => {
     try {
       const { user_id, player_id, team_id } = req.body;
-      const message = await deleteFavorite(user_id, player_id, team_id);
+      const message = await Favorite.deleteFavorite(user_id, player_id, team_id);
       res.json(message);
     } catch (err) {
       res.status(500).json({ message: err.message });

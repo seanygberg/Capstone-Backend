@@ -1,11 +1,11 @@
 const express = require('express');
-const { getAllTeams, getTeamById, addTeam } = require('../models/team');
+const Team = require('../models/team');
 const router = express.Router();
 
 // Get all teams
 router.get('/', async (req, res) => {
   try {
-    const teams = await getAllTeams();
+    const teams = await Team.getAllTeams();
     res.json(teams);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const teams = await getTeamById(id);
+    const teams = await Team.getTeamById(id);
     res.json(teams);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -27,7 +27,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const { name, city } = req.body;
   try {
-    const team = await createTeam(name, city);
+    const team = await Team.createTeam(name, city);
     res.status(201).json(team);
   } catch (err) {
     res.status(400).json({ message: err.message });
