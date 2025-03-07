@@ -6,6 +6,7 @@ const client = new Client({
   database: 'postgres',
   password: 'pDw3zIk9sw9KuPzn',
   port: 5432,
+  ssl: { rejectUnauthorized: false },
 });
 
 client.connect()
@@ -15,3 +16,4 @@ client.connect()
 module.exports = client;
 
 //postgresql://postgres:pDw3zIk9sw9KuPzn@db.kzlmwfnxoahkrvcqdiek.supabase.co:5432/postgres
+//ping kzlmwfnxoahkrvcqdiek.supabase.co
