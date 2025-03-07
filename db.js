@@ -2,11 +2,12 @@ const { Client } = require('pg');
 
 const client = new Client({
   user: 'postgres',
-  host: 'db.kzlmwfnxoahkrvcqdiek.supabase.co',
+  host: 'db.kzlmwfnxoahkrvcqdiek.supabase.co', // use Supabase IP or domain as usual
   database: 'postgres',
   password: 'pDw3zIk9sw9KuPzn',
   port: 5432,
   ssl: { rejectUnauthorized: false },
+  connectionString: 'postgres://postgres:pDw3zIk9sw9KuPzn@db.kzlmwfnxoahkrvcqdiek.supabase.co:5432/postgres?sslmode=require'
 });
 
 client.connect()
@@ -14,6 +15,3 @@ client.connect()
   .catch(err => console.error('Database connection error:', err.stack));
 
 module.exports = client;
-
-//postgresql://postgres:pDw3zIk9sw9KuPzn@db.kzlmwfnxoahkrvcqdiek.supabase.co:5432/postgres
-//ping kzlmwfnxoahkrvcqdiek.supabase.co
