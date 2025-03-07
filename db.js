@@ -2,7 +2,7 @@ const { Client } = require('pg');
 
 const client = new Client({
   user: 'postgres',
-  host: 'db.kzlmwfnxoahkrvcqdiek.supabase.co', // use Supabase IP or domain as usual
+  host: 'db.kzlmwfnxoahkrvcqdiek.supabase.co',
   database: 'postgres',
   password: 'pDw3zIk9sw9KuPzn',
   port: 5432,
