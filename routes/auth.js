@@ -1,9 +1,9 @@
 const express = require('express');
-const { login, register, logout } = require('../middleware/auth');
+const { login, signup, logout } = require('../middleware/auth');
 const router = express.Router();
 
 // POST route to register a new user
-router.post('/register', register);
+router.post('/register', signup);
 
 // POST route to log in
 router.post('/login', login);
