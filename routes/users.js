@@ -2,7 +2,7 @@ const express = require('express');
 const User = require('../models/user');
 const router = express.Router();
 
-// ✅ Get all users
+// Get all users
 router.get('/', async (req, res) => {
   try {
     const users = await User.getAllUsers();
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// ✅ Get a specific user by ID
+// Get a specific user by ID
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -35,7 +35,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// ✅ Add a new user
+// Add a new user
 router.post('/', async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -45,8 +45,6 @@ router.post('/', async (req, res) => {
 
   try {
     const user = await User.addUser(username, email, password);
-
-    // ✅ Always return JSON, even on success
     res.status(201).json({ 
       message: "User created successfully", 
       user 

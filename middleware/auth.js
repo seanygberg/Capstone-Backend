@@ -6,8 +6,17 @@ const { createToken } = require("../helpers/tokens");
 const signup = async (req, res) => {
   console.log(req.body);
   const { username, email, password, isAdmin } = req.body;
-  
+
   try {
+    // Check if the username or email already exists
+    const existingUser = await User.findOne({
+      where: { $or: [{ username }, { email }] },
+    });
+
+    if (existingUser) {
+      return res.status(400).json({ error: "Username or email already in use" });
+    }
+
     const hashPassword = await bcrypt.hash(password, 10);
 
     // Default user not admin
@@ -21,7 +30,7 @@ const signup = async (req, res) => {
     const token = createToken(newUser);
     return res.status(201).json({ message: "User created successfully", token });
   } catch (err) {
-    return res.status(500).json({ error: "Error creating user" });
+    return res.status(500).json({ error: "Error creating user", details: err.message });
   }
 }
 
@@ -48,11 +57,8 @@ const login = async (req, res) => {
     const token = createToken(user);
     return res.status(200).json({ token });
   } catch (err) {
-    return res.status(500).json({ error: "Error logging in" });
+    return res.status(500).json({ error: "Error logging in", details: err.message });
   }
-
 }
-
-
 
 module.exports = { signup, login };
