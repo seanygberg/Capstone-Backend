@@ -4,14 +4,15 @@ const { createToken } = require("../helpers/tokens");
 
 // Sign up new users
 const signup = async (req, res) => {
-  const { username, password, isAdmin } = req.body;
+  const { username, email, password, isAdmin } = req.body;
   
   try {
     const hashPassword = await bcrypt.hash(password, 10);
 
     // Default user not admin
-    const newUser = await User.create({
+    const newUser = await User.addUser({
       username,
+      email,
       password: hashPassword,
       isAdmin: isAdmin || false,
     });
@@ -51,9 +52,6 @@ const login = async (req, res) => {
 
 }
 
-const logout = () => {
-  localStorage.removeItem('token');  // Remove the token
-};
 
 
-module.exports = { signup, login, logout };
+module.exports = { signup, login };
