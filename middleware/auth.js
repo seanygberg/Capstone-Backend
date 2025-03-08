@@ -4,6 +4,7 @@ const { createToken } = require("../helpers/tokens");
 
 // Sign up new users
 const signup = async (req, res) => {
+  console.log(req.body);
   const { username, email, password, isAdmin } = req.body;
   
   try {
