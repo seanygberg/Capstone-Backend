@@ -1,6 +1,8 @@
 const express = require('express');
 const User = require('../models/user');
 const router = express.Router();
+const {authenticateToken} = require('../helpers/tokens')
+const jwt = require('jsonwebtoken');
 
 // Get all users
 router.get('/', async (req, res) => {
@@ -18,23 +20,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get a specific user by ID
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const user = await User.getUserById(id);
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    res.status(200).json(user);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
 // Add a new user
 router.post('/', async (req, res) => {
   const { username, email, password } = req.body;
@@ -46,12 +31,36 @@ router.post('/', async (req, res) => {
   try {
     const user = await User.addUser(username, email, password);
     res.status(201).json({ 
-      message: "User created successfully", 
-      user 
+      message: "User created successfully",
     });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Error creating user" });
+  }
+});
+
+// Get user by username
+router.get('/:username', async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    // Fetch user from the database using the username
+    const user = await User.getUserByName(username);  // Adjust based on your ORM or query method
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Send user data as response
+    res.json({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      // Add other fields you want to send back
+    });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ message: 'Error fetching user' });
   }
 });
 

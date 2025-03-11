@@ -1,8 +1,5 @@
 const client = require('../db');
 
-/**
- * Class representing the PlayerService for interacting with the players table.
- */
 class Player {
   /**
    * Retrieves all players from the database.
